@@ -1,5 +1,6 @@
 
-import { getFormData } from '@/lib/login';
+import { loginFormData } from '@/lib/login';
+import LoginFormSubmitState from "@/components/login-form-submit-state";
 
 export default function LoginPage() {
 
@@ -17,7 +18,7 @@ export default function LoginPage() {
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form action={getFormData} className="space-y-6">
+                <form action={loginFormData} className="space-y-6">
                     <div>
                         <label htmlFor="email" className="block text-sm/6 font-medium text-gray-400">
                             Email address
@@ -58,18 +59,13 @@ export default function LoginPage() {
                     </div>
 
                     <div>
-                        <button
-                            type="submit"
-                            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        >
-                            Sign in
-                        </button>
+                        <LoginFormSubmitState />
                     </div>
                 </form>
 
                 <p className="mt-10 text-center text-sm/6 text-gray-500">
-                    Not a member?{' '}
-                    <a href="localhost:3000/register" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                    Not a user yet?{' '}
+                    <a href={process.env.REGISTRATION_URL} className="font-semibold text-indigo-600 hover:text-indigo-500">
                         Register
                     </a>
                 </p>

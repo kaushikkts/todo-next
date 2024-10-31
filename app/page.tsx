@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 
 export default function Home() {
@@ -7,7 +6,7 @@ export default function Home() {
         <main>
           <h1>Welcome to the To Do App.</h1>
           <button>
-            <Link href="http://localhost:3000/auth/login" >Login</Link>
+            <Link href={process.env.LOGIN_URL} >Login</Link>
           </button>
         </main>
       </>
