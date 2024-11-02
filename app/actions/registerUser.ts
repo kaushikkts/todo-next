@@ -5,18 +5,20 @@ import { redirect } from "next/navigation";
 
 import { registerSchema } from "@/schemas/register";
 export const registerUser = async (prevState: unknown, formData: FormData) => {
-  console.log("entered registerUser.ts");
   const submission = parseWithZod(formData, {
     schema: registerSchema,
   });
 
-  console.log(submission);
   if (submission.status === "success") {
-    return redirect("/login");
+    console.log(submission.payload);
+    await fetch(`${process.env.API_BASE_URL}/api/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(submission.payload),
+    });
+    redirect("/login");
   }
 
-  // await fetch(`${process.env.API_BASE_URL}/api/auth/register`, {
-  //   method: "POST",
-  //   body: JSON.stringify(submission.payload),
-  // });
 };
