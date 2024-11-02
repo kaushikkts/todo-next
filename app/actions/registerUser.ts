@@ -20,5 +20,4 @@ export const registerUser = async (prevState: unknown, formData: FormData) => {
     });
     redirect("/login");
   }
-
 };
