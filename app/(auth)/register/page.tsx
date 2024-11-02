@@ -4,6 +4,7 @@ import { parseWithZod } from "@conform-to/zod";
 import { useActionState } from "react";
 
 import { registerUser } from "@/app/actions/registerUser";
+import LoginFormSubmitState from "@/components/login-form-submit-state";
 import { registerSchema } from "@/schemas/register";
 export default function RegisterPage() {
   const [lastResult, action] = useActionState(registerUser, undefined);
@@ -257,13 +258,20 @@ export default function RegisterPage() {
           </div>
         </div>
         <div className="mt-10">
-          <button
-            type="submit"
-            className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Register
-          </button>
+          <LoginFormSubmitState
+            NextText={"Registering..."}
+            PrevText={"Register"}
+          />
         </div>
+        <p className="mt-10 text-center text-sm/6 text-gray-500">
+          Already a user?{" "}
+          <a
+            href={`${process.env.BASE_URL}/login`}
+            className="font-semibold text-indigo-600 hover:text-indigo-500"
+          >
+            Login
+          </a>
+        </p>
       </div>
     </form>
   );

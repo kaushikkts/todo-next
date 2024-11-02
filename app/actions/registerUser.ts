@@ -12,7 +12,7 @@ export const registerUser = async (prevState: unknown, formData: FormData) => {
 
   console.log(submission);
   if (submission.status === "success") {
-    return redirect("/login");
+    return redirect(`${process.env.BASE_URL}/login`);
   }
 
   // await fetch(`${process.env.API_BASE_URL}/api/auth/register`, {
