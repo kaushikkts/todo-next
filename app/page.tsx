@@ -1,10 +1,10 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
-
 import { redirect } from "next/navigation";
 
 export default async function Home() {
   const accessToken = (await cookies()).get("accessToken");
+  console.log(accessToken);
   if (!accessToken) {
     return (
       <>
@@ -16,6 +16,5 @@ export default async function Home() {
       </>
     );
   }
-  return redirect("/dashboard")
-
+  return redirect("/dashboard");
 }

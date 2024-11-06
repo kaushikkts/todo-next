@@ -1,10 +1,13 @@
-import { logout } from "@/app/actions/logout";
 
-export default function DashboardPage() {
+import { logout } from "@/app/actions/logout";
+import { cookies } from "next/headers";
+
+export default async function DashboardPage() {
+
   return (
     <>
-      <h1>Dashboard Page</h1>
+      <h1>Dashboard Page -TODOS</h1>
       <button onClick={logout}>Logout</button>
     </>
-  )
+  );
 }

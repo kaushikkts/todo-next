@@ -5,9 +5,8 @@ export default function MainLayout() {
     <>
       <h1>Main Header</h1>
       <main>
-        <DashboardPage/>
+        <DashboardPage />
       </main>
     </>
-
-  )
+  );
 }
