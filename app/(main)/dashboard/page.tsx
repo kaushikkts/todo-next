@@ -1,9 +1,6 @@
-
 import { logout } from "@/app/actions/logout";
-import { cookies } from "next/headers";
 
 export default async function DashboardPage() {
-
   return (
     <>
       <h1>Dashboard Page -TODOS</h1>
