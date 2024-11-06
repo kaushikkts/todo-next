@@ -1,6 +1,7 @@
 "use client";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
+import Link from "next/link";
 import { useActionState } from "react";
 
 import { loginUser } from "@/app/actions/loginUser";
@@ -78,12 +79,12 @@ export default function LoginPage() {
           </div>
           <p className="mt-10 text-center text-sm/6 text-gray-500">
             Not a user yet?{" "}
-            <a
-              href={`${process.env.BASE_URL}/register`}
+            <Link
+              href={`/register`}
               className="font-semibold text-indigo-600 hover:text-indigo-500"
             >
               Register
-            </a>
+            </Link>
           </p>
         </div>
       </form>

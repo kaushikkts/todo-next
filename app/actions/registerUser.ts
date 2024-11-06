@@ -18,6 +18,7 @@ export const registerUser = async (prevState: unknown, formData: FormData) => {
       },
       body: JSON.stringify(submission.payload),
     });
-    redirect("/login");
+    return redirect("/login");
   }
+  return;
 };

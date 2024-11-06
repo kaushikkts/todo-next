@@ -1,14 +1,21 @@
+import { cookies } from "next/headers";
 import Link from "next/link";
 
-export default function Home() {
-  return (
-    <>
-      <main>
-        <h1>Welcome to the To Do App.</h1>
-        <button>
-          <Link href={`${process.env.BASE_URL}/login`}>Login</Link>
-        </button>
-      </main>
-    </>
-  );
+import { redirect } from "next/navigation";
+
+export default async function Home() {
+  const accessToken = (await cookies()).get("accessToken");
+  if (!accessToken) {
+    return (
+      <>
+        <main>
+          <button>
+            <Link href="/login">Login</Link>
+          </button>
+        </main>
+      </>
+    );
+  }
+  return redirect("/dashboard")
+
 }
