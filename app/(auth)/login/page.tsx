@@ -72,10 +72,7 @@ export default function LoginPage() {
           </div>
 
           <div className="mt-10">
-            <LoginFormSubmitState
-              NextText={"Logging In..."}
-              PrevText={"Login"}
-            />
+            <LoginFormSubmitState NextText="Logging in..." PrevText="Login" />
           </div>
           <p className="mt-10 text-center text-sm/6 text-gray-500">
             Not a user yet?{" "}

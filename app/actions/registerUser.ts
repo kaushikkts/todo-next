@@ -10,7 +10,6 @@ export const registerUser = async (prevState: unknown, formData: FormData) => {
   });
 
   if (submission.status === "success") {
-    console.log(submission.payload);
     await fetch(`${process.env.API_BASE_URL}/api/auth/register`, {
       method: "POST",
       headers: {

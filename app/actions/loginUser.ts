@@ -10,7 +10,6 @@ export async function loginUser(prevState: unknown, formData: FormData) {
   const submission = parseWithZod(formData, { schema: loginSchema });
 
   if (submission.status === "success") {
-    console.log(submission.payload);
     const response = await fetch(`${process.env.API_BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: {
