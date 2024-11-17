@@ -10,21 +10,21 @@ import {
   TableRow,
   Tooltip,
 } from "@nextui-org/react";
+import Link from "next/link";
 import React from "react";
 
-import { columns, users } from "./data";
 import { DeleteIcon } from "./DeleteIcon";
 import { EditIcon } from "./EditIcon";
 import { EyeIcon } from "./EyeIcon";
 
 const statusColorMap = {
-  uninitiated: "warning",
-  ongoing: "info",
-  completed: "success",
-  cancelled: "danger",
+  IN_PROGRESS: "primary",
+  NOT_STARTED: "info",
+  COMPLETED: "success",
+  CANCELLED: "danger",
 };
 
-export default function TodoTable() {
+export default function TodoTable({ rows, columns, shouldOpenModal }) {
   const renderCell = React.useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
 
@@ -60,8 +60,13 @@ export default function TodoTable() {
               </span>
             </Tooltip>
             <Tooltip content="Edit user">
-              <span className="cursor-pointer text-lg text-warning active:opacity-50">
-                <EditIcon />
+              <span
+                className="cursor-pointer text-lg text-warning active:opacity-50"
+                onClick={shouldOpenModal}
+              >
+                <Link href={"/dashboard/create-task"}>
+                  <EditIcon />
+                </Link>
               </span>
             </Tooltip>
             <Tooltip color="danger" content="Delete user">
@@ -89,7 +94,7 @@ export default function TodoTable() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={users}>
+        <TableBody items={rows}>
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (

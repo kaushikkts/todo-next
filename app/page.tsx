@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 
 export default async function Home() {
   const accessToken = (await cookies()).get("accessToken");
+  console.log(accessToken);
   if (!accessToken) {
     return (
       <NextUIProvider>
@@ -16,5 +17,6 @@ export default async function Home() {
       </NextUIProvider>
     );
   }
-  return redirect("/dashboard");
+    return redirect("/dashboard");
+
 }

@@ -1,56 +1,49 @@
 "use client";
 
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
 import { logout } from "@/app/actions/logout";
 import TodoTable from "@/components/table/todoTable";
+import { getAllTodos } from "@/app/actions/todos";
 
 export const revalidate = 20;
 
 export default function DashboardPage() {
-  const rows = [
-    {
-      key: "1",
-      name: "Tony Reichert",
-      role: "CEO",
-      status: "Active",
-    },
-    {
-      key: "2",
-      name: "Zoey Lang",
-      role: "Technical Lead",
-      status: "Paused",
-    },
-    {
-      key: "3",
-      name: "Jane Fisher",
-      role: "Senior Developer",
-      status: "Active",
-    },
-    {
-      key: "4",
-      name: "William Howard",
-      role: "Community Manager",
-      status: "Vacation",
-    },
+  const [openModal, setOpenModal] = useState(false);
+  const [todos, setTodos] = useState([]);
+  const columns = [
+    { name: "TITLE", uid: "title" },
+    { name: "CONTENT", uid: "content" },
+    { name: "STATUS", uid: "status" },
+    { name: "ACTIONS", uid: "actions" },
   ];
 
-  const columns = [
-    {
-      key: "name",
-      label: "NAME",
-    },
-    {
-      key: "role",
-      label: "ROLE",
-    },
-    {
-      key: "status",
-      label: "STATUS",
-    },
-  ];
+  function shouldOpenModal() {
+    setOpenModal(() => !openModal);
+  }
+
+  useEffect(() => {
+    async function getTodos() {
+
+      const todos = await getAllTodos();
+      console.log(todos);
+      setTodos(todos);
+    }
+    getTodos();
+  }, []);
+
+
+
   return (
     <>
       <h1>Dashboard Page -TODOS</h1>
-      <TodoTable rows={rows} columns={columns} />
+      <TodoTable
+        rows={todos}
+        columns={columns}
+        shouldOpenModal={shouldOpenModal}
+      />
+      <Link href={"/dashboard/create-task"}>Create Task</Link>
       <button onClick={logout}>Logout</button>
     </>
   );
