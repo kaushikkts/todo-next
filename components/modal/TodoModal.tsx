@@ -4,20 +4,21 @@ import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { Input, Textarea } from "@nextui-org/input";
 import {
-  Button, DatePicker,
+  Button,
+  DatePicker,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
-  useDisclosure
+  useDisclosure,
 } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 
 import { createTodoAction } from "@/app/actions/todos";
 import { todoSchema } from "@/schemas/todo";
-import { useFormStatus } from "react-dom";
 
 export default function TodoModal({ isModalOpen = false }) {
   const { pending } = useFormStatus();
@@ -116,7 +117,7 @@ export default function TodoModal({ isModalOpen = false }) {
                     Close
                   </Button>
                   <Button color="primary" type="submit" isLoading={pending}>
-                    {pending? 'Creating New Task' : 'Create Task'}
+                    {pending ? "Creating New Task" : "Create Task"}
                   </Button>
                 </ModalFooter>
               </form>

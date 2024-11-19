@@ -1,6 +1,7 @@
 "use server";
 
 import { parseWithZod } from "@conform-to/zod";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -14,9 +15,8 @@ export const createTodoAction = async (
     schema: registerSchema,
   });
   const userId = (await cookies()).get("userId")?.value;
-  const payload = {...submission.payload, userId};
+  const payload = { ...submission.payload, userId };
 
-  console.log(submission.payload);
   const response = await fetch(`${process.env.API_BASE_URL}/api/todo`, {
     method: "POST",
     headers: {
@@ -25,10 +25,8 @@ export const createTodoAction = async (
     },
     body: JSON.stringify(payload),
   });
-  console.log(response.status);
   if (response.ok && response.status.toString().startsWith("20")) {
-    console.log('entered');
-    return redirect('/dashboard');
+    return redirect("/dashboard");
   }
 };
 export const getAllTodos = async () => {
@@ -38,14 +36,19 @@ export const getAllTodos = async () => {
   //   return redirect("/login");
   // }
 
-  const response = await fetch(`${process.env.API_BASE_URL}/api/todos/${userId}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
+  const response = await fetch(
+    `${process.env.API_BASE_URL}/api/todos/${userId}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      next: {
+        tags: ["todos"],
+      },
     },
-  });
-
+  );
 
   if (response.ok) {
     if (response.status === 403) {
@@ -69,4 +72,21 @@ export const getAllTodos = async () => {
     return response.json();
   }
   return redirect("/login");
+};
+
+export const deleteTodo = async (id: string) => {
+  const accessToken = (await cookies()).get("accessToken")?.value;
+  const userId = (await cookies()).get("userId")?.value;
+  console.log("logging todoId: - ", id);
+  const response = await fetch(`${process.env.API_BASE_URL}/api/todo`, {
+    method: "DELETE",
+    body: JSON.stringify({ userId, id }),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  if (response.ok && response.status === 204) {
+    revalidateTag("todos");
+  }
 };

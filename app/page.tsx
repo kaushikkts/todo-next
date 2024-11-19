@@ -17,6 +17,5 @@ export default async function Home() {
       </NextUIProvider>
     );
   }
-    return redirect("/dashboard");
-
+  return redirect("/dashboard");
 }
