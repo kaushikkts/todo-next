@@ -11,7 +11,9 @@ import {
   Tooltip,
 } from "@nextui-org/react";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
+
+import { deleteTodo, getAllTodos } from "@/app/actions/todos";
 
 import { DeleteIcon } from "./DeleteIcon";
 import { EditIcon } from "./EditIcon";
@@ -24,19 +26,24 @@ const statusColorMap = {
   CANCELLED: "danger",
 };
 
-export default function TodoTable({ rows, columns, shouldOpenModal }) {
-  const renderCell = React.useCallback((user, columnKey) => {
-    const cellValue = user[columnKey];
-
+export default function TodoTable({ rows, columns, test }) {
+  const renderCell = React.useCallback((todo, columnKey) => {
+    const cellValue = todo[columnKey];
+    async function deleteATodo(selectedTask) {
+      console.log(selectedTask);
+      await deleteTodo(selectedTask.id);
+      const response = await getAllTodos();
+      test(response);
+    }
     switch (columnKey) {
       case "name":
-        return <p>{user.email}</p>;
+        return <p>{todo.email}</p>;
       case "description":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-sm capitalize">{cellValue}</p>
             <p className="text-bold text-sm capitalize text-default-400">
-              {user.team}
+              {todo.team}
             </p>
           </div>
         );
@@ -44,7 +51,7 @@ export default function TodoTable({ rows, columns, shouldOpenModal }) {
         return (
           <Chip
             className="capitalize"
-            color={statusColorMap[user.status]}
+            color={statusColorMap[todo.status]}
             size="sm"
             variant="flat"
           >
@@ -60,17 +67,17 @@ export default function TodoTable({ rows, columns, shouldOpenModal }) {
               </span>
             </Tooltip>
             <Tooltip content="Edit user">
-              <span
-                className="cursor-pointer text-lg text-warning active:opacity-50"
-                onClick={shouldOpenModal}
-              >
+              <span className="cursor-pointer text-lg text-warning active:opacity-50">
                 <Link href={"/dashboard/create-task"}>
                   <EditIcon />
                 </Link>
               </span>
             </Tooltip>
             <Tooltip color="danger" content="Delete user">
-              <span className="cursor-pointer text-lg text-danger active:opacity-50">
+              <span
+                className="cursor-pointer text-lg text-danger active:opacity-50"
+                onClick={() => deleteATodo(todo)}
+              >
                 <DeleteIcon />
               </span>
             </Tooltip>
